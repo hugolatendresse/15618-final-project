@@ -1,0 +1,10 @@
+# Ignore extensionless files
+*
+!/**/
+!*.*
+!Makefile
+*.o
+*.exe
+.vscode
+logs
+.idea/
