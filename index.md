@@ -7,7 +7,7 @@ Links:
 
 ## Summary
 
-TODO: what we will doe
+TODO: what we will do
 
 ## Background
 
