@@ -31,12 +31,12 @@ The framework does not yet support serving LLMs with MoE architectures. We propo
 
 The biggest challenge that we anticipate is onboarding ourselves onto the FlexFlow project. The repository is quite large and nuanced. We do not yet know what components of the architecture we choose are already implemented, and where exactly our starting point will be. We also do not know whether we need to create and tune a small speculative model (SSM) to enable speculative decoding for inference, which is a core technique for decreasing the latency of models served with FlexFlow. To begin tackling these challenges, we will meet with a member of Prof Jia’s group who is familiar with FlexFlow.
 
-A core challenge of the parallelization work we will do is figuring out how to efficiently parallelize the MoE MLP layer. Depending on the architecture we choose, we will need to parallelize the execution of a subset of expert networks. This may entail two “nested” aspects of the layer: intra-expert parallelism, and inter-expert parallelism. Our current interpretation is that intra-expert parallelism reduces down to parallelizing matrix multiplication. Inter-expert parallelism could be more complex – parallelizing distinct matrix multiplications. We will try to experiment with different techniques and choose which performs best.
+A core challenge of the parallelization work we will do is figuring out how to efficiently parallelize the MoE layer. Depending on the architecture we choose, we will need to parallelize the execution of a subset of expert networks. This may entail two “nested” aspects of the layer: intra-expert parallelism, and inter-expert parallelism. We will try to experiment with different techniques and choose which performs best.
 
 
 ## Resources
 
-We will be working off of the FlexFlow codebase, which can be found here[2]. We will be writing a combination of CUDA kernels and C++ code.
+We will be working off of the FlexFlow codebase, which can be found in [2]. We will be writing a combination of CUDA kernels and C++ code.
 
 The architecture we implement will depend on what compute resources we have available to us. The RTX 2080 chip used by the GHC machines may be insufficient to accomplish our tasks. 
 
@@ -48,14 +48,14 @@ For example, in order to have Mixtral 8x7B Instruct in half-precision, we would 
 - PLAN TO ACHIEVE
   - Select a Hugging Face model as a baseline model
   - Finalize the selection of hardware for the project  
-  - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely the Switch Transformer blocks consisting of routers (gate functional units) and experts (FFNs)
   - Develop a strategy to parallelize Switch Transformer blocks
+  - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely the Switch Transformer blocks consisting of routers (gate functional units) and experts (FFNs)
   - Complete the implementation of a full MoE transformer by incorporating our work with existing FlexFlow CUDA kernels for the traditional transformer parts of MoE models (self-attention, etc.)    
   - Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only).
   - Successfully serve the model in FlexFlow 
   - Benchmark per-token latency of our baseline model using FlexFlow vs per-token latency without using an accelerator. 
   - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing our process in parallelizing it.
-- 
+
 - HOPE TO ACHIEVE
   - Continuously iterate on our implementation to achieve good speedups 
   - Benchmark our implementation against other accelerators like vLLM and FasterTransformer 
@@ -66,19 +66,14 @@ For example, in order to have Mixtral 8x7B Instruct in half-precision, we would 
 FlexFlow is implemented in C++ and CUDA. 
 
 ## Schedule
-    
-  - Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only).
-  - Successfully serve the model in FlexFlow 
-  - Benchmark per-token latency of our baseline model using FlexFlow vs per-token latency without using an accelerator. 
-  - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing our process in parallelizing it.
 
 | Week              | Task                                                                                          | 
 |-------------------|-----------------------------------------------------------------------------------------------|
 | Nov. 11 - Nov. 17 | Meet with Gabriele or Zhihao and finalize the project proposal                                | 
 | Nov. 11 - Nov. 17 | Select a Hugging Face model as a baseline model                                               | 
 | Nov. 11 - Nov. 17 | Finalize the selection of hardware for the project                                            | 
-| Nov. 18 - Nov. 24 | Write a CUDA kernel(s) implementing the Switch Transformer block                              | 
 | Nov. 18 - Nov. 24 | Develop a strategy to parallelize Switch Transformer blocks                                   | 
+| Nov. 18 - Nov. 24 | Write a CUDA kernel(s) implementing the Switch Transformer block                              | 
 | Nov. 18 - Nov. 24 | Complete the implementation of a full MoE transformer                                         | 
 | Nov. 18 - Nov. 24 | Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only). | 
 | Nov. 25 - Dec. 1  | Successfully serve the model in FlexFlow                                                      | 
@@ -88,6 +83,6 @@ FlexFlow is implemented in C++ and CUDA.
 
 ## References
 
-[1] https://arxiv.org/abs/2305.09781
-[2] https://github.com/flexflow/FlexFlow
-[3] https://flexflow.readthedocs.io/en/latest/
+[1] https://arxiv.org/abs/2305.09781  
+[2] https://github.com/flexflow/FlexFlow  
+[3] https://flexflow.readthedocs.io/en/latest/  
