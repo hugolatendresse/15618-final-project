@@ -49,7 +49,7 @@ For example, in order to have Mixtral 8x7B Instruct in half-precision, we would 
 ## Goals and Deliverables
 
 - PLAN TO ACHIEVE
-  - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely the Switch Transformer blocks consisting of routers (gate functional units) and experts (FFNs)
+  - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely the blocks consisting of routers (gate functional units) and experts (FFNs)
   - Complete the implementation of a full MoE transformer by incorporating our work with existing FlexFlow CUDA kernels for the traditional transformer parts of MoE models (self-attention, etc.)    
   - Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only).
   - Successfully serve the model an MoE in FlexFlow.
@@ -77,7 +77,7 @@ FlexFlow is implemented in C++ and CUDA.
 | Nov. 11 - Nov. 17     | Select a Hugging Face model as a baseline model                                                                | 
 | Nov. 11 - Nov. 17     | Finalize the selection of hardware for the project                                                             | 
 | Nov. 18 - Nov. 24     | Develop a strategy to parallelize the baseline model with data parallelism                                     | 
-| Nov. 18 - Nov. 24     | Write a CUDA kernel(s) implementing the Switch Transformer block (under data parallelism)                      | 
+| Nov. 18 - Nov. 24     | Write a CUDA kernel(s) implementing the MoE gate and MLP block (under data parallelism)                      | 
 | Nov. 18 - Nov. 24     | Complete the implementation of a full MoE transformer (under data parallelism)                                 | 
 | Nov. 18 - Nov. 24     | Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only, data parallelism) | 
 | Nov. 25 - Dec. 1      | Implement model parallelism and successfully serve the model in FlexFlow with this second approach             | 
