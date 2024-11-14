@@ -16,16 +16,19 @@ Jump to:
 
 ## Summary
 
-We will add the capability of inferring with a Mixture of Experts Transformer model to the FlexFlow Serve framework. We will also profile its performance and benchmark its per-token latency against a standard, non-accelerated service setting.
+We will add the capability of inferring with a Mixture of Experts model (a transformer with MoE for MLP only) to the FlexFlow Serve framework. We will also benchmark its per-token latency and throughput against a standard, non-accelerated service setting.
 
 ## Background
 
 Mixture of Experts (MoE) is a machine learning technique that has surged in popularity as a method to keep resource requirements and latency low for training and serving increasingly large generative DL models. MoE replaces a functional unit, or layer, of a model with multiple “expert” networks that are each significantly smaller than the original layer. Each expert is trained to specialize in processing a subset of the input space, so a given input need only be processed by its corresponding expert. A router or gate network is placed at the beginning of the layer and determines which expert to send the input to. In MoE, the inputs of the model are routed to a single expert via a gate or routing network, which is placed before the experts. Only a proper subset of the whole model is used for forward passes. This reduces the computational budget needed for inference as well as per-token generation latency. 
 
+MoE is most commonly applied to MLP layers of transformers, so that is what we will focus on. 
+
 FlexFlow Serve is an open-source compiler and distributed system for highly optimized LLM serving. It utilizes standard forms of multi-GPU model parallelism, as well as speculative decoding to accelerate inference. The project is led by Prof Jia and his research team.
 
-The framework does not yet support serving LLMs with MoE architectures. We propose selecting a baseline MoE-based LLM, implementing what is needed in FlexFlow Serve to support it, and benchmarking its inference performance (per-token latency, in particular) against a traditional, non-accelerated service setting. This will entail recreating the MoE model’s architecture and forward pass in FlexFlow, writing some CUDA kernels to parallelize the MoE router mechanism and MoE MLP layers, and evaluating performance.
+The framework does not yet support serving LLMs with MoE architectures. We propose selecting a baseline MoE-based LLM, implementing what is needed in FlexFlow Serve to support it, and benchmarking its inference performance (per-token latency, in particular) against a traditional, non-accelerated service setting. This will entail recreating the MoE model’s architecture and forward pass in FlexFlow, writing some CUDA kernels to parallelize the MoE router mechanism and/or MoE MLP layers, and evaluating performance.
 
+To parallelize, we will first try data parallelism, and then try model parallelism. 
 
 ## The Challenge
 
@@ -46,15 +49,15 @@ For example, in order to have Mixtral 8x7B Instruct in half-precision, we would 
 ## Goals and Deliverables
 
 - PLAN TO ACHIEVE
-  - Select a Hugging Face model as a baseline model
-  - Finalize the selection of hardware for the project  
-  - Develop a strategy to parallelize Switch Transformer blocks
   - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely the Switch Transformer blocks consisting of routers (gate functional units) and experts (FFNs)
   - Complete the implementation of a full MoE transformer by incorporating our work with existing FlexFlow CUDA kernels for the traditional transformer parts of MoE models (self-attention, etc.)    
   - Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only).
-  - Successfully serve the model in FlexFlow 
-  - Benchmark per-token latency of our baseline model using FlexFlow vs per-token latency without using an accelerator. 
-  - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing our process in parallelizing it.
+  - Successfully serve the model an MoE in FlexFlow.
+  - Benchmark per-token latency and throughput of our baseline model using FlexFlow vs per-token latency without using an accelerator. 
+  - All steps above should be completed twice: once for data parallelism and once for model parallelism. 
+  - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing our process in parallelizing it.  
+
+  <br>
 
 - HOPE TO ACHIEVE
   - Continuously iterate on our implementation to achieve good speedups 
@@ -67,19 +70,20 @@ FlexFlow is implemented in C++ and CUDA.
 
 ## Schedule
 
-| Week              | Task                                                                                          | 
-|-------------------|-----------------------------------------------------------------------------------------------|
-| Nov. 11 - Nov. 17 | Meet with Gabriele or Zhihao and finalize the project proposal                                | 
-| Nov. 11 - Nov. 17 | Select a Hugging Face model as a baseline model                                               | 
-| Nov. 11 - Nov. 17 | Finalize the selection of hardware for the project                                            | 
-| Nov. 18 - Nov. 24 | Develop a strategy to parallelize Switch Transformer blocks                                   | 
-| Nov. 18 - Nov. 24 | Write a CUDA kernel(s) implementing the Switch Transformer block                              | 
-| Nov. 18 - Nov. 24 | Complete the implementation of a full MoE transformer                                         | 
-| Nov. 18 - Nov. 24 | Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only). | 
-| Nov. 25 - Dec. 1  | Successfully serve the model in FlexFlow                                                      | 
-| Dec. 2 - Dec. 8   | Benchmark our implementation with regular inference                                           | 
-| Dec. 2 - Dec. 8   | Complete poster                                                                               | 
-| Dec. 9 - Dec. 15  | Complete final report                                                                         | 
+| Week                  | Task                                                                                                           | 
+|-----------------------|----------------------------------------------------------------------------------------------------------------|
+| Nov. 11 - Nov. 17     | Familiarize ourselves with the FlexFlow repo                                                | 
+| Nov. 11 - Nov. 17     | Meet with Gabriele or Zhihao and finalize the project proposal                                                 | 
+| Nov. 11 - Nov. 17     | Select a Hugging Face model as a baseline model                                                                | 
+| Nov. 11 - Nov. 17     | Finalize the selection of hardware for the project                                                             | 
+| Nov. 18 - Nov. 24     | Develop a strategy to parallelize the baseline model with data parallelism                                     | 
+| Nov. 18 - Nov. 24     | Write a CUDA kernel(s) implementing the Switch Transformer block (under data parallelism)                      | 
+| Nov. 18 - Nov. 24     | Complete the implementation of a full MoE transformer (under data parallelism)                                 | 
+| Nov. 18 - Nov. 24     | Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only, data parallelism) | 
+| Nov. 25 - Dec. 1      | Implement model parallelism and successfully serve the model in FlexFlow with this second approach             | 
+| Dec. 2 - Dec. 8       | Benchmark our implementation with regular inference                                                            | 
+| Dec. 2 - Dec. 8       | Complete poster                                                                                                | 
+| Dec. 9 - Dec. 15      | Complete final report                                                                                          | 
 
 ## References
 
