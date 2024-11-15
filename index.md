@@ -74,6 +74,7 @@ strategies to parallelize MoE layers. We call them “inter-expert parallelism�
 Inter-expert parallelism means allocating the different experts to different GPUs. It’s similar to model parallelism,
 except that each sequence (each token) is routed to only one expert.
 <br>
+
 Intra-expert parallelism means processing the activations within a single expert concurrently. It is similar to the
 concept of data parallelism, but at a finer granularity (we split across activations within a sample instead of across
 samples within a batch). <br>
