@@ -22,7 +22,12 @@ We will add support for Mixture of Experts (MoE) Transformer models to the FlexF
 
 Mixture of Experts (MoE) is a machine learning technique that has surged in popularity as a method to keep latency low for training and serving increasingly large generative DL models. This technique is commonly used for LLMs, which our project will focus on. MoE replaces a functional unit, or layer, of a model with multiple “expert” networks that are each significantly smaller than the original layer. As a result of the training process, each expert specializes in processing a (not necessarily disjoint) subset of the input space, so a given input need only be processed by its corresponding expert(s). A router or gate network is placed at the beginning of the layer and determines which expert(s) to send the input to. In sparse MoE, only a proper subset of the whole model is used for forward passes. This reduces computational requirements and can help improve the per-token generation latency. 
 
-MoE is commonly applied to MLP layers of transformers, with the notable example of the Mixtral model family. As these dense layers comprise a large proportion of LLM architectures, they require significant amounts of computation and memory accesses. Moreover, modern LLMs do not fit on a single GPU. Therefore, parallelization is necessary to serve them. The question is not "whether" to parallelize, but "how" to parallelize, with the goal of achieving the best possible latency and throughput on a given set of hardware resources. Different parallelization strategies will lead to different data movement, amount of redundant computation, etc., leading to different performance. 
+MoE is commonly applied to MLP layers of transformers, with the notable example of the Mixtral model family. As most layers 
+of modern LLM architectures, they require significant amounts of computation and memory accesses. Moreover, modern LLMs 
+do not fit on a single GPU. Therefore, parallelization is necessary to serve them. The question is not "whether" to 
+parallelize, but "how" to parallelize, with the goal of achieving the best possible 
+latency and throughput on a given set of hardware resources. Different parallelization strategies will lead to different 
+data movement, amount of redundant computation, etc., leading to different performance. 
 
 FlexFlow Serve is a project led by Prof Jia and his research team. It is an open-source compiler and distributed system for highly optimized LLM serving. It utilizes standard forms of multi-GPU parallelism, as well as speculative decoding to accelerate inference. For our research project, we will focus on incremental decoding: speculative decoding is not in scope. 
 
