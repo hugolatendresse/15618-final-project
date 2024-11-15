@@ -153,4 +153,4 @@ We will be working from Linux machines since it is the only OS officially suppor
 
 ## References
 
-[1] https://github.com/flexflow/FlexFlow  
+[1] [https://github.com/flexflow/FlexFlow](https://github.com/flexflow/FlexFlow)
