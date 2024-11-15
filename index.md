@@ -147,7 +147,7 @@ We will be working from Linux machines since it is the only OS officially suppor
 | Nov. 18 - Nov. 24 | Complete milestone report                                                                   | 
 | Nov. 25 - Dec. 1  | Benchmark our implementation with Hugging Face Transformer inference                        | 
 | Nov. 25 - Dec. 1  | Try a different parallelism strategy (“intra-expert” or other)                              | 
-| Dec. 2 - Dec. 8   | Continue iterating on our implementation                                                    | 
+| Dec. 2 - Dec. 8   | Finalize our implementation                                                                 | 
 | Dec. 2 - Dec. 8   | Complete poster                                                                             | 
 | Dec. 9 - Dec. 15  | Complete final report                                                                       | 
 
