@@ -112,7 +112,7 @@ TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f
 | Nov. 11 - Nov. 17     | Finalize the project proposal                                                                               | 
 | Nov. 11 - Nov. 17     | Familiarize ourselves with the FlexFlow repo                                                                | 
 | Nov. 11 - Nov. 17     | Go through FlexFlow's developer guide                                                                       | 
-| Nov. 11 - Nov. 17     | Meet with Gabriele                                                                                          | 
+| Nov. 11 - Nov. 17     | Meet with a member of Prof Jia's reserach team                                                              | 
 | Nov. 18 - Nov. 24     | Confirm the choice of baseline model, based on the resources available on PSC                               | 
 | Nov. 18 - Nov. 24     | Develop a strategy to parallelize the baseline model with intra-expert parallelism                          | 
 | Nov. 18 - Nov. 24     | Write a CUDA kernel(s) implementing an MoE MLP layer (with intra-expert parallelism)                        | 
