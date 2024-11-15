@@ -16,7 +16,7 @@ Jump to:
 
 ## Summary
 
-We will add support for Mixture of Experts (MoE) Transformer models to the FlexFlow Serve framework. Once we are able to successfully run inference with the model on FlexFlow, we will benchmark its per-token latency and throughput on a node with four V100 GPUs against a standard, non-accelerated service setting.
+We will add support for Mixture of Experts (MoE) Transformer models to the FlexFlow Serve framework. In particular, we will add support for models that use MoE in their MLP layers. Once we are able to successfully run inference with the model on FlexFlow, we will benchmark its per-token latency and throughput on a node with four V100 GPUs against a standard, non-accelerated service setting.
 
 ## Background
 
@@ -46,7 +46,11 @@ There are many possible ways to decompose and schedule the calculation on multip
 Divergent execution is typical to neural networks due to the non-linear activation functions. In MoE models, an additional 
 layer of divergence is introduced due to the routing to experts. That can introduce load imbalance, as some experts may receive more inputs than others. 
 
+TODO Describe constraints: What are the properties of the system that make mapping the workload to it challenging?
+
 ## Resources
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
 
 We will be working off of the FlexFlow codebase, which can be found in [1]. We will be writing a combination of CUDA kernels and C++ code.
 
@@ -54,6 +58,8 @@ We plan to use PSC's GPU cluster, where compute nodes each have 4 V100 GPUs with
 
 
 ## Goals and Deliverables
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf (they say its the most important section)
 
 - PLAN TO ACHIEVE
   - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely a MoE MLP layer consisting of routers (gate functional units) and experts (FFNs)
@@ -70,9 +76,13 @@ We plan to use PSC's GPU cluster, where compute nodes each have 4 V100 GPUs with
 
 ## Platform Choice
 
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
+
 FlexFlow is implemented in C++ and CUDA. 
 
 ## Schedule
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
 
 | Week                  | Task                                                                                                        | 
 |-----------------------|-------------------------------------------------------------------------------------------------------------|
@@ -94,5 +104,7 @@ FlexFlow is implemented in C++ and CUDA.
 | Dec. 9 - Dec. 15      | Complete final report                                                                                       | 
 
 ## References
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
 
 [1] https://github.com/flexflow/FlexFlow  
