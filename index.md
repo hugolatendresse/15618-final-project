@@ -20,13 +20,20 @@ We will add the capability of inferring with a Mixture of Experts model (a trans
 
 ## Background
 
-Mixture of Experts (MoE) is a machine learning technique that has surged in popularity as a method to keep resource requirements and latency low for training and serving increasingly large generative DL models. This technique is most commonly used for LLMs, which our project will focus on. MoE replaces a functional unit, or layer, of a model with multiple “expert” networks that are each significantly smaller than the original layer. Each expert is trained to specialize in processing a subset of the input space, so a given input need only be processed by its corresponding expert. A router or gate network is placed at the beginning of the layer and determines which expert to send the input to. Only a proper subset of the whole model is used for forward passes. This reduces the computational needs and can help improve the per-token generation latency. 
+Mixture of Experts (MoE) is a machine learning technique that has surged in popularity as a method to keep resource 
+requirements and latency low for training and serving increasingly large generative DL models. This technique is most 
+commonly used for LLMs, which our project will focus on. MoE replaces a functional unit, or layer, of a model with 
+multiple “expert” networks that are each significantly smaller than the original layer. Each expert is trained to 
+specialize in processing a subset of the input space, so a given input need only be processed by its corresponding 
+expert. A router or gate network is placed at the beginning of the layer and determines which expert to send the 
+input to. Only a proper subset of the whole model is used for forward passes. This reduces the computational needs 
+and can help improve the per-token generation latency. 
 
 MoE is most commonly applied to MLP layers of transformers, so that is what we will focus on. As most layers of modern LLMs, those layers require a lot of computation and memory access. Moreover, modern LLMs do not fit on a single GPU. Therefore, parallelization is necessary to serve them. The question is not "whether" to parallelize, but "how" to parallelize, with the goal of achieving the best possible latency and throughput on a given set of hardware resource. Different parallelization strategies will lead to different data movement, amount of redundant computation, etc., leading to different performance. 
 In the case of MoE layers, the two main parallelization strategies are intra-expert parallelism, and inter-expert parallelism.
 Intra-expert parallelism means processing the activations within a single expert concurrently. It is similar to the concept of data parallelism, but at a finer granularity (we split across activations within a sample instead of samples within a batch). 
 Inter-expert parallelism means treating each expert or groups of experts as separate models that can operate independently on different GPUs. It is akin to model parallelism.  
-We will tackle intra-parallelism first, and then inter parallelism. 
+We will tackle intra-parallelism first, and inter-parallelism second. 
 
 FlexFlow Serve is a project led by Prof Jia and his research team. It is an open-source compiler and distributed system for highly optimized LLM serving. It utilizes standard forms of multi-GPU parallelism, as well as speculative decoding to accelerate inference. For our research project, we will focus on incremental decoding: speculative decoding is not in scope. 
 
@@ -39,13 +46,29 @@ FlexFlow does not yet support serving LLMs with MoE architectures. We propose se
 
 The first challenge is to onboard ourselves onto the FlexFlow project. The repository is quite large and nuanced. We do 
 not yet know what components of the architecture we choose are already implemented, and where exactly our starting point will be. 
-To begin tackling these challenges, we will meet with a member of Prof Jia’s group who is familiar with FlexFlow.
 
-A core challenge of the parallelization work we will do is figuring out how to efficiently parallelize the MoE layer. Depending on the architecture we choose, we will need to parallelize the execution of a subset of expert networks. 
-We will try to experiment with different techniques, including intra-expert parallelism and inter-expert parallelism, and choose which one performs best.
+The workload consists of an entire transformer model, though our focus will be on the MoE-MLP layers. Each layer of the 
+model is of course dependent on the previous layer (and not vice-versa, since we are focusing on inference). Within an MoE-MLP layer,
+the "experts" (FNN models) are dependent on the router. 
+
+Temporal locality is high for the weights, but very limited for the activations. We expect spatial locality to be high within experts, but possibly lower across experts. 
+
+The core challenge of the parallelization work we will do is figuring out the best way parallelize the MoE layer. Inferring 
+with a model that cannot fit on a single GPU necessitates expensive communication, increasing the communication-to-computation ratio. 
+There are infinitely many ways to decompose and schedule the calculation on multiple workers. Experimentation is needed to find the strategy that minimizes 
+the amount of communication (and other costs). We will try to experiment with different techniques, including 
+intra-expert parallelism and inter-expert parallelism, and choose which one performs best. 
+
+Divergent execution is typical to neural networks due to the non-linear activation functions. In MoE models, an additional 
+layer of divergence is introduced due to the routing to experts. That can introduce load imbalance, as some experts may receive more inputs than others. 
+
+TODO Describe constraints: What are the properties of the system that make mapping the
+workload to it challenging?
 
 
 ## Resources
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
 
 We will be working off of the FlexFlow codebase, which can be found in [1]. We will be writing a combination of CUDA kernels and C++ code.
 
@@ -54,6 +77,9 @@ VRAM, for a total of 128GB for VRAM. We will tentatively base our project on Mix
 
 
 ## Goals and Deliverables
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
+(they say it's the most improtant section)
 
 - PLAN TO ACHIEVE
   - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely a MoE MLP layer consisting of routers (gate functional units) and experts (FFNs)
@@ -72,14 +98,20 @@ VRAM, for a total of 128GB for VRAM. We will tentatively base our project on Mix
 
 ## Platform Choice
 
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
+
 FlexFlow is implemented in C++ and CUDA. 
 
 ## Schedule
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
+
 
 | Week                  | Task                                                                                                        | 
 |-----------------------|-------------------------------------------------------------------------------------------------------------|
 | Nov. 11 - Nov. 17     | Finalize the project proposal                                                                               | 
 | Nov. 11 - Nov. 17     | Familiarize ourselves with the FlexFlow repo                                                                | 
+| Nov. 11 - Nov. 17     | Go through FlexFlow's developer guide                                                                       | 
 | Nov. 11 - Nov. 17     | Meet with Gabriele                                                                                          | 
 | Nov. 18 - Nov. 24     | Confirm the choice of baseline model, based on the resources available on PSC                               | 
 | Nov. 18 - Nov. 24     | Develop a strategy to parallelize the baseline model with intra-expert parallelism                          | 
@@ -94,5 +126,8 @@ FlexFlow is implemented in C++ and CUDA.
 | Dec. 9 - Dec. 15      | Complete final report                                                                                       | 
 
 ## References
+
+TODO complete after reading https://www.cs.cmu.edu/afs/cs/academic/class/15418-f24/www/projects/project-proposal.pdf
+
 
 [1] https://github.com/flexflow/FlexFlow  
