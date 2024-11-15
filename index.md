@@ -59,9 +59,11 @@ The first challenge is to onboard ourselves onto the FlexFlow project. The repos
 not yet know what components of the architecture we choose are already implemented, and where exactly our starting point
 will be.
 <br>
+
 The workload consists of an entire transformer model, though our focus will be on the MoE-MLP layers. Each layer of the
 model is of course dependent on the previous layer (and not vice-versa, since we are focusing on inference). Within an
-MoE-MLP layer, the "experts" (FNN models) are dependent on the router. <br>
+MoE-MLP layer, the "experts" (FNN models) are dependent on the router. 
+<br>
 
 The core challenge of the parallelization work we will do is figuring out the best way to parallelize the MoE layer.
 Inferring with a model that cannot fit on a single GPU necessitates expensive communication, increasing the
@@ -77,10 +79,12 @@ except that each sequence (each token) is routed to only one expert.
 
 Intra-expert parallelism means processing the activations within a single expert concurrently. It is similar to the
 concept of data parallelism, but at a finer granularity (we split across activations within a sample instead of across
-samples within a batch). <br>
+samples within a batch). 
+<br>
 
 Temporal locality is high for the weights, but very limited for the activations. We expect spatial locality to be high
-within experts, but possibly lower across experts. <br>
+within experts, but possibly lower across experts. 
+<br>
 
 Divergent execution is typical to neural networks due to the non-linear activation functions. In MoE models, an
 additional layer of divergence is introduced due to the routing to experts. That can introduce load imbalance, as some
@@ -91,6 +95,7 @@ experts may receive more inputs than others.
 We will be working off of the FlexFlow codebase [1]. We will be writing a combination
 of CUDA kernels and C++ code.
 <br>
+
 We plan to use one compute node in Pittsburgh's Supercomputer (Bridges-2) GPU cluster. Each node has four V100 GPUs with
 32GB of VRAM, for a total of 128GB for VRAM. We will tentatively base our project on Mixtral 8x7B Instruct with
 half-precision, which requires 90GB of VRAM in total.
