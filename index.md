@@ -16,7 +16,7 @@ Jump to:
 
 ## Summary
 
-We will add the capability of inferring with a Mixture of Experts model (a transformer with MoE for MLP only) to the FlexFlow Serve framework. We will also benchmark its per-token latency and throughput against a standard, non-accelerated service setting.
+We will add the capability of inferring with a Mixture of Experts model (a Transformer with MoE, for MLP only) to the FlexFlow Serve framework. Once we are able to infer with an MoE model in FlexFlow, we will benchmark its per-token latency and throughput against a standard, non-accelerated service setting.
 
 ## Background
 
