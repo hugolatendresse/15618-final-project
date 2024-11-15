@@ -92,8 +92,8 @@ experts may receive more inputs than others.
 
 ## Resources
 
-We will be working off of the FlexFlow codebase [1]. We will be writing a combination
-of CUDA kernels and C++ code.
+We will be working off of the FlexFlow codebase [[1]](https://hugolatendresse.github.io/15618-final-project/#references). 
+We will be writing a combination of CUDA kernels and C++ code.
 <br>
 
 We plan to use one compute node in Pittsburgh's Supercomputer (Bridges-2) GPU cluster. Each node has four V100 GPUs with
