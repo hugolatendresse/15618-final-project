@@ -133,23 +133,23 @@ We will be working from Linux machines since it is the only OS officially suppor
 
 ## Schedule
 
-| Week                    | Task                                                                                        | 
-|-------------------------|---------------------------------------------------------------------------------------------|
-| Nov. 11 - Nov. 17&nbsp;&nbsp;&nbsp;&nbsp;       | Finalize the project proposal                                                               | 
-| Nov. 11 - Nov. 17&nbsp;&nbsp;&nbsp;&nbsp;       | Familiarize ourselves with the FlexFlow repo                                                | 
-| Nov. 11 - Nov. 17&nbsp;&nbsp;&nbsp;&nbsp;       | Walk through FlexFlow's developer guide                                                     | 
-| Nov. 11 - Nov. 17&nbsp;&nbsp;&nbsp;&nbsp;       | Meet with a member of Prof Jia's research team                                              | 
-| Nov. 18 - Nov. 24&nbsp;&nbsp;&nbsp;&nbsp;       | Confirm the choice of baseline model, based on the resources available on PSC               | 
-| Nov. 18 - Nov. 24&nbsp;&nbsp;&nbsp;&nbsp;       | Finalize our initial strategy to parallelize the baseline model (probably “inter-experts”). | 
-| Nov. 18 - Nov. 24&nbsp;&nbsp;&nbsp;&nbsp;       | Write a CUDA kernel(s) implementing an MoE MLP layer                                        | 
-| Nov. 18 - Nov. 24&nbsp;&nbsp;&nbsp;&nbsp;       | Complete the implementation of a full MoE transformer                                       | 
-| Nov. 18 - Nov. 24&nbsp;&nbsp;&nbsp;&nbsp;       | Write other CUDA and C++ code to make our baseline model work with FlexFlow                 | 
-| Nov. 18 - Nov. 24&nbsp;&nbsp;&nbsp;&nbsp;       | Complete milestone report                                                                   | 
-| Nov. 25 - Dec. 1&nbsp;&nbsp;&nbsp;&nbsp;        | Benchmark our implementation with Hugging Face Transformer inference                        | 
-| Nov. 25 - Dec. 1&nbsp;&nbsp;&nbsp;&nbsp;        | Try a different parallelism strategy (“intra-expert” or other)                              | 
-| Dec. 2 - Dec. 8&nbsp;&nbsp;&nbsp;&nbsp;         | Finalize our implementation                                                                 | 
-| Dec. 2 - Dec. 8&nbsp;&nbsp;&nbsp;&nbsp;         | Complete poster                                                                             | 
-| Dec. 9 - Dec. 15&nbsp;&nbsp;&nbsp;&nbsp;        | Complete final report                                                                       | 
+| Week         | Task                                                                                        | 
+|--------------|---------------------------------------------------------------------------------------------|
+| 11/11&nbsp;-&nbsp;11/17 | Finalize the project proposal                                                               | 
+| 11/11&nbsp;-&nbsp;11/17 | Familiarize ourselves with the FlexFlow repo                                                | 
+| 11/11&nbsp;-&nbsp;11/17 | Walk through FlexFlow's developer guide                                                     | 
+| 11/11&nbsp;-&nbsp;11/17 | Meet with a member of Prof Jia's research team                                              | 
+| 11/18&nbsp;-&nbsp;11/24 | Confirm the choice of baseline model, based on the resources available on PSC               | 
+| 11/18&nbsp;-&nbsp;11/24 | Finalize our initial strategy to parallelize the baseline model (probably “inter-experts”). | 
+| 11/18&nbsp;-&nbsp;11/24 | Write a CUDA kernel(s) implementing an MoE MLP layer                                        | 
+| 11/18&nbsp;-&nbsp;11/24 | Complete the implementation of a full MoE transformer                                       | 
+| 11/18&nbsp;-&nbsp;11/24 | Write other CUDA and C++ code to make our baseline model work with FlexFlow                 | 
+| 11/18&nbsp;-&nbsp;11/24 | Complete milestone report                                                                   | 
+| 11/25&nbsp;-&nbsp;12/1 | Benchmark our implementation with Hugging Face Transformer inference                        | 
+| 11/25&nbsp;-&nbsp;12/1 | Try a different parallelism strategy (“intra-expert” or other)                              | 
+| 12/2&nbsp;-&nbsp;12/8  | Finalize our implementation                                                                 | 
+| 12/2&nbsp;-&nbsp;12/8  | Complete poster                                                                             | 
+| 12/8&nbsp;-&nbsp;12/15 | Complete final report                                                                       | 
 
 ## References
 
