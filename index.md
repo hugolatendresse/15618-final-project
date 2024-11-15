@@ -16,13 +16,17 @@ Jump to:
 
 ## Summary
 
-We will add the capability of inferring with a Mixture of Experts model (a transformer with MoE, for MLP layers only) to the FlexFlow Serve framework. Once we are able to infer with an MoE model in FlexFlow, we will benchmark its per-token latency and throughput against a standard, non-accelerated service setting.
+We will add the capability of inferring with a Mixture of Experts model (a transformer with MoE, for MLP layers only) to the FlexFlow Serve framework. Once we are able to infer with an MoE model in FlexFlow, we will benchmark its per-token latency and throughput on a node with four V100 GPUs against a standard, non-accelerated service setting.
 
 ## Background
 
-Mixture of Experts (MoE) is a machine learning technique that has surged in popularity as a method to keep resource requirements and latency low for training and serving increasingly large generative DL models. MoE replaces a functional unit, or layer, of a model with multiple “expert” networks that are each significantly smaller than the original layer. Each expert is trained to specialize in processing a subset of the input space, so a given input need only be processed by its corresponding expert. A router or gate network is placed at the beginning of the layer and determines which expert to send the input to. Only a proper subset of the whole model is used for forward passes. This reduces the computational needs and can help improve the per-token generation latency. 
+Mixture of Experts (MoE) is a machine learning technique that has surged in popularity as a method to keep resource requirements and latency low for training and serving increasingly large generative DL models. This technique is most commonly used for LLMs, which our project will focus on. MoE replaces a functional unit, or layer, of a model with multiple “expert” networks that are each significantly smaller than the original layer. Each expert is trained to specialize in processing a subset of the input space, so a given input need only be processed by its corresponding expert. A router or gate network is placed at the beginning of the layer and determines which expert to send the input to. Only a proper subset of the whole model is used for forward passes. This reduces the computational needs and can help improve the per-token generation latency. 
 
-MoE is most commonly applied to MLP layers of transformers, so that is what we will focus on. 
+MoE is most commonly applied to MLP layers of transformers, so that is what we will focus on. As most layers of modern LLMs, those layers require a lot of computation and memory access. Moreover, modern LLMs do not fit on a single GPU. Therefore, parallelization is necessary to serve them. The question is not "whether" to parallelize, but "how" to parallelize, with the goal of achieving the best possible latency and throughput on a given set of hardware resource. Different parallelization strategies will lead to different data movement, amount of redundant computation, etc., leading to different performance. 
+In the case of MoE layers, the two main parallelization strategies are intra-expert parallelism, and inter-expert parallelism.
+Intra-expert parallelism means processing the activations within a single expert concurrently. It is similar to the concept of data parallelism, but at a finer granularity (we split across activations within a sample instead of samples within a batch). 
+Inter-expert parallelism means treating each expert or groups of experts as separate models that can operate independently on different GPUs. It is akin to model parallelism.  
+We will tackle intra-parallelism first, and then inter parallelism. 
 
 FlexFlow Serve is a project led by Prof Jia and his research team. It is an open-source compiler and distributed system for highly optimized LLM serving. It utilizes standard forms of multi-GPU parallelism, as well as speculative decoding to accelerate inference. For our research project, we will focus on incremental decoding: speculative decoding is not in scope. 
 
@@ -30,7 +34,6 @@ FlexFlow does not yet support serving LLMs with MoE architectures. We propose se
 
 
 
-To parallelize, we will first try data parallelism, and then try model parallelism. 
 
 ## The Challenge
 
@@ -38,7 +41,8 @@ The first challenge is to onboard ourselves onto the FlexFlow project. The repos
 not yet know what components of the architecture we choose are already implemented, and where exactly our starting point will be. 
 To begin tackling these challenges, we will meet with a member of Prof Jia’s group who is familiar with FlexFlow.
 
-A core challenge of the parallelization work we will do is figuring out how to efficiently parallelize the MoE layer. Depending on the architecture we choose, we will need to parallelize the execution of a subset of expert networks. This may entail two “nested” aspects of the layer: intra-expert parallelism, and inter-expert parallelism. We will try to experiment with different techniques and choose which one performs best.
+A core challenge of the parallelization work we will do is figuring out how to efficiently parallelize the MoE layer. Depending on the architecture we choose, we will need to parallelize the execution of a subset of expert networks. 
+We will try to experiment with different techniques, including intra-expert parallelism and inter-expert parallelism, and choose which one performs best.
 
 
 ## Resources
@@ -57,7 +61,7 @@ VRAM, for a total of 128GB for VRAM. We will tentatively base our project on Mix
   - Write other CUDA and C++ code to make our baseline model work with the FlexFlow API (inference only).
   - Successfully serve an MoE model with FlexFlow.
   - Benchmark per-token latency and throughput of our baseline model using FlexFlow vs per-token latency without using an accelerator. 
-  - All steps above will be completed twice: once for data parallelism and once for model parallelism. 
+  - All steps above will be completed twice: once for intra-expert parallelism and once for inter-expert parallelism. 
   - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing our process in parallelizing it.
 
 
@@ -72,21 +76,22 @@ FlexFlow is implemented in C++ and CUDA.
 
 ## Schedule
 
-| Week                  | Task                                                                                                           | 
-|-----------------------|----------------------------------------------------------------------------------------------------------------|
-| Nov. 11 - Nov. 17     | Finalize the project proposal                                                                                  | 
-| Nov. 11 - Nov. 17     | Familiarize ourselves with the FlexFlow repo                                                                   | 
-| Nov. 11 - Nov. 17     | Meet with Gabriele                                                                                             | 
-| Nov. 18 - Nov. 24     | Confirm the choice of baseline model, based on the resources available on PSC                                  | 
-| Nov. 18 - Nov. 24     | Develop a strategy to parallelize the baseline model with data parallelism                                     | 
-| Nov. 18 - Nov. 24     | Write a CUDA kernel(s) implementing an MoE MLP layer (under data parallelism)                                  | 
-| Nov. 18 - Nov. 24     | Complete the implementation of a full MoE transformer (under data parallelism)                                 | 
-| Nov. 18 - Nov. 24     | Write other CUDA and C++ code to make our baseline model work with FlexFlow (inference only, data parallelism) | 
-| Nov. 18 - Nov. 24     | Start working on model parallelism                                                                             | 
-| Nov. 25 - Dec. 1      | Complete model parallelism and successfully serve the model in FlexFlow with this second approach              | 
-| Dec. 2 - Dec. 8       | Benchmark our implementation with regular inference                                                            | 
-| Dec. 2 - Dec. 8       | Complete poster                                                                                                | 
-| Dec. 9 - Dec. 15      | Complete final report                                                                                          | 
+| Week                  | Task                                                                                                        | 
+|-----------------------|-------------------------------------------------------------------------------------------------------------|
+| Nov. 11 - Nov. 17     | Finalize the project proposal                                                                               | 
+| Nov. 11 - Nov. 17     | Familiarize ourselves with the FlexFlow repo                                                                | 
+| Nov. 11 - Nov. 17     | Meet with Gabriele                                                                                          | 
+| Nov. 18 - Nov. 24     | Confirm the choice of baseline model, based on the resources available on PSC                               | 
+| Nov. 18 - Nov. 24     | Develop a strategy to parallelize the baseline model with intra-expert parallelism                          | 
+| Nov. 18 - Nov. 24     | Write a CUDA kernel(s) implementing an MoE MLP layer (with intra-expert parallelism)                        | 
+| Nov. 18 - Nov. 24     | Complete the implementation of a full MoE transformer (with intra-expert parallelism)                       | 
+| Nov. 18 - Nov. 24     | Write other CUDA and C++ code to make our baseline model work with FlexFlow (with intra-expert parallelism) | 
+| Nov. 18 - Nov. 24     | Complete milestone report regarding with intra-expert parallelism                                           | 
+| Nov. 18 - Nov. 24     | Start working on inter-expert parallelism (similar steps as for intra-expert parallelism)                   | 
+| Nov. 25 - Dec. 1      | Complete inter-expert parallelism implementation and successfully serve the model in FlexFlow with it       | 
+| Dec. 2 - Dec. 8       | Benchmark our implementation with regular inference                                                         | 
+| Dec. 2 - Dec. 8       | Complete poster                                                                                             | 
+| Dec. 9 - Dec. 15      | Complete final report                                                                                       | 
 
 ## References
 
