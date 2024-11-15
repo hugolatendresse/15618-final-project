@@ -1,4 +1,4 @@
-title: Parallelizing Mixture of Experts in FlexFlow for Low-Latency Transformer Inference
+title: Parallelizing Mixture of Experts Transformers in FlexFlow for Low-Latency Inference
 description: 15-618 Final Project at Carnegie Mellon University
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
