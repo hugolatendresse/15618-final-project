@@ -133,23 +133,23 @@ We will be working from Linux machines since it is the only OS officially suppor
 
 ## Schedule
 
-| Week         | Task                                                                                        | 
-|--------------|---------------------------------------------------------------------------------------------|
-| 11/11&nbsp;-&nbsp;11/17 | Finalize the project proposal                                                               | 
-| 11/11&nbsp;-&nbsp;11/17 | Familiarize ourselves with the FlexFlow repo                                                | 
-| 11/11&nbsp;-&nbsp;11/17 | Walk through FlexFlow's developer guide                                                     | 
-| 11/11&nbsp;-&nbsp;11/17 | Meet with a member of Prof Jia's research team                                              | 
-| 11/18&nbsp;-&nbsp;11/24 | Confirm the choice of baseline model, based on the resources available on PSC               | 
-| 11/18&nbsp;-&nbsp;11/24 | Finalize our initial strategy to parallelize the baseline model (probably “inter-experts”). | 
-| 11/18&nbsp;-&nbsp;11/24 | Write a CUDA kernel(s) implementing an MoE MLP layer                                        | 
-| 11/18&nbsp;-&nbsp;11/24 | Complete the implementation of a full MoE transformer                                       | 
-| 11/18&nbsp;-&nbsp;11/24 | Write other CUDA and C++ code to make our baseline model work with FlexFlow                 | 
-| 11/18&nbsp;-&nbsp;11/24 | Complete milestone report                                                                   | 
-| 11/25&nbsp;-&nbsp;12/1 | Benchmark our implementation with Hugging Face Transformer inference                        | 
-| 11/25&nbsp;-&nbsp;12/1 | Try a different parallelism strategy (“intra-expert” or other)                              | 
-| 12/2&nbsp;-&nbsp;12/8  | Finalize our implementation                                                                 | 
-| 12/2&nbsp;-&nbsp;12/8  | Complete poster                                                                             | 
-| 12/8&nbsp;-&nbsp;12/15 | Complete final report                                                                       | 
+| Initial Target Completion | Task                                                                                       | Status      |
+|---------------------------|--------------------------------------------------------------------------------------------|-------------|
+| 11/11&nbsp;-&nbsp;11/17   | Finalize the project proposal                                                              | Done        | 
+| 11/11&nbsp;-&nbsp;11/17   | Familiarize ourselves with the FlexFlow repo                                               | Done        |
+| 11/11&nbsp;-&nbsp;11/17   | Walk through FlexFlow's developer guide                                                    | Done        |
+| 11/11&nbsp;-&nbsp;11/17   | Meet with a member of Prof Jia's research team                                             | Done        |
+| 11/18&nbsp;-&nbsp;11/24   | Confirm the choice of baseline model, based on the resources available on PSC              | Done        |
+| 11/18&nbsp;-&nbsp;11/24   | Finalize our initial strategy to parallelize the baseline model | Done        |
+| 11/18&nbsp;-&nbsp;11/24   | Complete the implementation of a full MoE transformer in FlexFlow                          | In Progress |
+| 11/18&nbsp;-&nbsp;11/24   | Write other CUDA and C++ code to make our baseline model work with FlexFlow                | In Progress |
+| 11/18&nbsp;-&nbsp;11/24   | Complete milestone report                                                                  | Done        |
+| 11/25&nbsp;-&nbsp;12/1    | Benchmark our implementation with Hugging Face Transformer inference                       |             |
+| 11/25&nbsp;-&nbsp;12/1    | Try a different parallelism strategy (“intra-expert” or other)                             |             |
+| 12/2&nbsp;-&nbsp;12/8     | Finalize our implementation                                                                |             |
+| 12/2&nbsp;-&nbsp;12/8     | Complete poster                                                                            |             |
+| 12/8&nbsp;-&nbsp;12/15    | Complete final report                                                                      |             |
+
 
 ## References
 
