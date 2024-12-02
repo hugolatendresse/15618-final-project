@@ -133,22 +133,25 @@ We will be working from Linux machines since it is the only OS officially suppor
 
 ## Schedule
 
-| Initial Target Completion | Task                                                                                       | Status      |
-|---------------------------|--------------------------------------------------------------------------------------------|-------------|
-| 11/11&nbsp;-&nbsp;11/17   | Finalize the project proposal                                                              | Done        | 
-| 11/11&nbsp;-&nbsp;11/17   | Familiarize ourselves with the FlexFlow repo                                               | Done        |
-| 11/11&nbsp;-&nbsp;11/17   | Walk through FlexFlow's developer guide                                                    | Done        |
-| 11/11&nbsp;-&nbsp;11/17   | Meet with a member of Prof Jia's research team                                             | Done        |
-| 11/18&nbsp;-&nbsp;11/24   | Confirm the choice of baseline model, based on the resources available on PSC              | Done        |
-| 11/18&nbsp;-&nbsp;11/24   | Finalize our initial strategy to parallelize the baseline model | Done        |
-| 11/18&nbsp;-&nbsp;11/24   | Complete the implementation of a full MoE transformer in FlexFlow                          | In Progress |
-| 11/18&nbsp;-&nbsp;11/24   | Write other CUDA and C++ code to make our baseline model work with FlexFlow                | In Progress |
-| 11/18&nbsp;-&nbsp;11/24   | Complete milestone report                                                                  | Done        |
-| 11/25&nbsp;-&nbsp;12/1    | Benchmark our implementation with Hugging Face Transformer inference                       |             |
-| 11/25&nbsp;-&nbsp;12/1    | Try a different parallelism strategy (“intra-expert” or other)                             |             |
-| 12/2&nbsp;-&nbsp;12/8     | Finalize our implementation                                                                |             |
-| 12/2&nbsp;-&nbsp;12/8     | Complete poster                                                                            |             |
-| 12/8&nbsp;-&nbsp;12/15    | Complete final report                                                                      |             |
+| Task                                                                                              | Initial Target              | Revised Target         | Status      |
+|---------------------------------------------------------------------------------------------------|-----------------------------|------------------------|-------------|
+| Finalize the project proposal                                                                     | 11/11&nbsp;-&nbsp;11/17     |                        | Done        | 
+| Familiarize ourselves with the FlexFlow repo                                                      | 11/11&nbsp;-&nbsp;11/17     |                        | Done        |
+| Walk through FlexFlow's developer guide                                                           | 11/11&nbsp;-&nbsp;11/17     |                        | Done        |
+| Meet with a member of Prof Jia's research team                                                    | 11/11&nbsp;-&nbsp;11/17     |                        | Done        |
+| Successfully install FlexFlow on an EC2 instance                                                  | 11/11&nbsp;-&nbsp;11/17     |                        | Done        |
+| Confirm the choice of baseline model                     | 11/18&nbsp;-&nbsp;11/24     |                        | Done        |
+| Finalize our initial strategy to parallelize the baseline model                                   | 11/18&nbsp;-&nbsp;11/24     |                        | Done        |
+| Complete milestone report                                                                         | 11/18&nbsp;-&nbsp;11/24     |                        | Done        |
+| Complete MoE transformer code in C++ (and corresponding ops in CUDA)                              | 11/18&nbsp;-&nbsp;11/24     | 12/6&nbsp;-&nbsp;12/8| In Progress |
+| Successfully run incremental decoding on (M4-ai/TinyMistral-6x248M)                               | 11/18&nbsp;-&nbsp;11/24     | 12/6&nbsp;-&nbsp;12/8  | In Progress |
+| Benchmark our implementation with Hugging Face Transformer inference                              | 11/25&nbsp;-&nbsp;12/1      | 12/6&nbsp;-&nbsp;12/8  |             |
+| Try a different parallelism strategy (“intra-expert” or other)                                    | 11/25&nbsp;-&nbsp;12/1      | 12/8&nbsp;-&nbsp;12/15 |             |
+| Run and benchmark on a different MoE model, such as Mixtral-8x7B | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/15 |             |
+| Successfully install FlexFlow on the PSC machines                                                 | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/15 |             |
+| Run benchmarking on the PSC machines                                                               | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/15 |             |
+| Complete poster                                                                                   | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/15 |             |
+| Complete final report                                                                             | 12/8&nbsp;-&nbsp;12/15      |                        |             |
 
 
 ## References
