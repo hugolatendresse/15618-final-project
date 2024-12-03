@@ -104,28 +104,25 @@ half-precision, which requires 90GB of VRAM in total.
 ## Goals and Deliverables
 
 - PLAN TO ACHIEVE
-    - Write a CUDA kernel(s) implementing the key components of our baseline MoE model, namely a MoE MLP layer
-      consisting of routers (gate functional units) and experts (FFNs)
+    - Implement the key components of our baseline MoE model, namely a MoE MLP layer consisting of routers (gate functional units) and experts (FFNs). Incremental decoding only.
     - Complete the implementation of a full MoE transformer by incorporating our work with existing FlexFlow CUDA
       kernels for the traditional parts of MoE transformers (self-attention, etc.)
     - Write other CUDA and C++ code to make our baseline model work with the FlexFlow API (inference only).
-    - Successfully serve an MoE model with FlexFlow.
-    - Benchmark per-token latency and throughput of our baseline model using FlexFlow vs per-token latency of the
+    - Successfully serve an TinyMistral MoE model with FlexFlow.
+    - Benchmark per-token latency and throughput of our baseline model using FlexFlow vs the
       Hugging Face Transformers package.
     - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing
       our process in parallelizing it.
-    - Show the speed at which we can output tokens versus Hugging Face Transformers, through a video or in real time.
-
-We will prioritize an inter-expert parallelism strategy (see description in the Challenge section). As time permits, we
-will try intra-expert parallelism and other strategies.
 
 - HOPE TO ACHIEVE
+    - Implement Expert Parallelism.
     - Beat Hugging Face Transformers in terms of per-token latency. We only "hope" to achieve that because that library
       already makes use of parallelization and is probably optimized to some extent, and because we are not using
       speculative decoding.
     - Profile our implementation and identify the bottlenecks.
     - Iterate on our implementation to achieve better speedups.
     - Benchmark our implementation against other accelerators like vLLM and FasterTransformer.
+    - Have a Pull Request ready to be merged on the main branch of FlexFlow. We think it is likely this will be completed after the timeline of the 15-618 project. 
 
 ## Platform Choice
 
@@ -134,23 +131,26 @@ We will be working from Linux machines since it is the only OS officially suppor
 
 ## Schedule
 
-| Week         | Task                                                                                        | 
-|--------------|---------------------------------------------------------------------------------------------|
-| 11/11&nbsp;-&nbsp;11/17 | Finalize the project proposal                                                               | 
-| 11/11&nbsp;-&nbsp;11/17 | Familiarize ourselves with the FlexFlow repo                                                | 
-| 11/11&nbsp;-&nbsp;11/17 | Walk through FlexFlow's developer guide                                                     | 
-| 11/11&nbsp;-&nbsp;11/17 | Meet with a member of Prof Jia's research team                                              | 
-| 11/18&nbsp;-&nbsp;11/24 | Confirm the choice of baseline model, based on the resources available on PSC               | 
-| 11/18&nbsp;-&nbsp;11/24 | Finalize our initial strategy to parallelize the baseline model (probably “inter-experts”). | 
-| 11/18&nbsp;-&nbsp;11/24 | Write a CUDA kernel(s) implementing an MoE MLP layer                                        | 
-| 11/18&nbsp;-&nbsp;11/24 | Complete the implementation of a full MoE transformer                                       | 
-| 11/18&nbsp;-&nbsp;11/24 | Write other CUDA and C++ code to make our baseline model work with FlexFlow                 | 
-| 11/18&nbsp;-&nbsp;11/24 | Complete milestone report                                                                   | 
-| 11/25&nbsp;-&nbsp;12/1 | Benchmark our implementation with Hugging Face Transformer inference                        | 
-| 11/25&nbsp;-&nbsp;12/1 | Try a different parallelism strategy (“intra-expert” or other)                              | 
-| 12/2&nbsp;-&nbsp;12/8  | Finalize our implementation                                                                 | 
-| 12/2&nbsp;-&nbsp;12/8  | Complete poster                                                                             | 
-| 12/8&nbsp;-&nbsp;12/15 | Complete final report                                                                       | 
+| Task                                                                 | Initial Target              | Revised Target          | Status      |
+|----------------------------------------------------------------------|-----------------------------|-------------------------|-------------|
+| Finalize the project proposal                                        | 11/11&nbsp;-&nbsp;11/17     |                         | Done        | 
+| Familiarize ourselves with the FlexFlow repo                         | 11/11&nbsp;-&nbsp;11/17     |                         | Done        |
+| Walk through FlexFlow's developer guide                              | 11/11&nbsp;-&nbsp;11/17     |                         | Done        |
+| Meet with a member of Prof Jia's research team                       | 11/11&nbsp;-&nbsp;11/17     |                         | Done        |
+| Successfully install FlexFlow on an EC2 instance                     | 11/11&nbsp;-&nbsp;11/17     |                         | Done        |
+| Confirm the choice of baseline model                                 | 11/18&nbsp;-&nbsp;11/24     |                         | Done        |
+| Finalize our initial strategy to parallelize the baseline model      | 11/18&nbsp;-&nbsp;11/24     |                         | Done        |
+| Complete milestone report                                            | 11/18&nbsp;-&nbsp;11/24     |                         | Done        |
+| Complete MoE transformer code in C++ (and corresponding ops in CUDA) | 11/18&nbsp;-&nbsp;11/24     | 12/2&nbsp;-&nbsp;12/5   | In Progress |
+| Successfully run incremental decoding on (M4-ai/TinyMistral-6x248M)  | 11/18&nbsp;-&nbsp;11/24     | 12/2&nbsp;-&nbsp;12/5   | In Progress |
+| Benchmark our implementation with Hugging Face Transformer inference | 11/25&nbsp;-&nbsp;12/1      | 12/6&nbsp;-&nbsp;12/8   |             |
+| Successfully install FlexFlow on the PSC machines                    | 12/2&nbsp;-&nbsp;12/8       | 12/6&nbsp;-&nbsp;12/8   |             |
+| Run and benchmark on a different MoE model, such as Mixtral-8x7B     | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/11  |             |
+| Implement expert parallelism (if time permits)                       | 11/25&nbsp;-&nbsp;12/1      | 12/8&nbsp;-&nbsp;12/11  |             |
+| Run benchmarking on the PSC machines                                 | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/11  |             |
+| Complete poster                                                      | 12/2&nbsp;-&nbsp;12/8       | 12/8&nbsp;-&nbsp;12/11  |             |
+| Complete final report                                                | 12/8&nbsp;-&nbsp;12/15      | 12/12&nbsp;-&nbsp;12/15 |             |
+
 
 ## References
 
