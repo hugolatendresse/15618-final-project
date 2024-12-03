@@ -13,6 +13,7 @@ Jump to:
 External Links:
 
 - [Project Proposal](docs/15618%20Project%20Proposal.pdf)
+- [Project Milestone](docs/15618%20Project%20Milestone.pdf)
 
 ## Summary
 
