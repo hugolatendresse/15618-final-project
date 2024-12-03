@@ -109,7 +109,7 @@ half-precision, which requires 90GB of VRAM in total.
       kernels for the traditional parts of MoE transformers (self-attention, etc.)
     - Write other CUDA and C++ code to make our baseline model work with the FlexFlow API (inference only).
     - Successfully serve a TinyMistral MoE model with FlexFlow.
-    - Benchmark per-token latency and throughput of our baseline model using FlexFlow vs the
+    - Benchmark per-token latency and throughput of our baseline model using FlexFlow with the
       Hugging Face Transformers package.
     - Create a poster explaining how FlexFlow works, describing the architecture of our chosen MoE model, and showing
       our process in parallelizing it.
